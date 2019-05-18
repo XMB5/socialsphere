@@ -1,3 +1,5 @@
+const maxSize = 10;
+
 function update(spheres){
     //stores previous diameter values of each sphere
     for(let sphere of spheres){
@@ -10,4 +12,7 @@ function update(spheres){
             friend.diameter += percent
         }
     }
+}
+function mapRadius(sphere){
+    return sphere.diameter * 8 + 2
 }
