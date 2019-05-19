@@ -1,4 +1,4 @@
-const maxSize = 10;
+const maxSize = 50;
 
 function update(spheres){
     //stores previous diameter values of each sphere
@@ -15,7 +15,7 @@ function update(spheres){
     }
 }
 function mapDiameter(diameter){
-    return diameter * 8 + 2;
+    return diameter * 40 + 10;
 }
 function numFriends(){
     return Math.random() * 8 + 2;
