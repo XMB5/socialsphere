@@ -6,7 +6,7 @@ function update(spheres){
             sphere.lifespan += 1
     }
     for(let sphere of spheres){
-        let percent = (sphere.prevDiameter * .007) / sphere.friends.length;
+        let percent = (sphere.prevDiameter * options.diffuseRate / 1000) / sphere.friends.length;
         //add a portion of the sphere's diameter to each of its friends
         for(let friend of sphere.friends){
             friend.diameter += percent;

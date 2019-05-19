@@ -5,7 +5,19 @@ let hasAlreadyAddedButton;
 let colorMode;
 function help() {
     run = false;
-    Swal.fire('Explanation', 'You have stumbled upon my almost done 21st project. Nice Job!').then(() => run = true);
+    Swal.fire({
+        title: 'Social Network Information Visualization ',
+        html: 'When you press OK, the simulation will begin. <br/>' +
+        'Part 1 of the simulation:<br/>' +
+        'The purple sphere represents a user injecting some information to a network.<br/>' +
+        'Over time, this information spreads through friend connections(lines connecting spheres).<br/><br/>' +
+        'Part 2 of the simulation: <br/>' +
+        'Once all the spheres are purple, press \' Show Propagation Summary \'. <br/>' +
+        'Spheres are colored based on how quickly they received the information(green = fast, red = slow). ' +
+        'This shows how related the spheres(users) are to the original sphere(user). <br/><br/>' +
+        'Adjust parameters and restart to simulation with the button on top.<br/>' +
+        'Press help to display this text.<br/><br/>',
+        footer: 'Full Code is available at https://github.com/XMB5/socialsphere'}).then(() => run = true);
 }
 
 var canvas = document.getElementById("renderCanvas");
@@ -127,7 +139,7 @@ engine.runRenderLoop(function () {
                         }
                     }
                     let material = new BABYLON.StandardMaterial();
-                    material.diffuseColor = colorMap(1 - sphere.lifespan / max);
+                    material.diffuseColor = colorMap(1 - sphere.lifespan /max);
                     sphere.mesh.material = material;
                 }
             }
