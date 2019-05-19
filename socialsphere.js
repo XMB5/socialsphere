@@ -45,19 +45,32 @@ for (let i = 0; i < numSpheres; i++) {
     spheres.push({mesh, diameter, friends: []});
 }
 
+const black = new BABYLON.Color4(0, 0, 0, 1);
+
+const lines = [];
+
 for (let i = 0; i < numConnections; i++) {
     let sphere1 = spheres[Math.floor(Math.random() * spheres.length)];
     let sphere2 = spheres[Math.floor(Math.random() * spheres.length)];
     if (sphere1 !== sphere2 && !sphere1.friends.includes(sphere2)) {
         sphere1.friends.push(sphere2);
         sphere2.friends.push(sphere1);
+        lines.push([
+                sphere1.mesh.position,
+                sphere2.mesh.position
+        ]);
     }
 }
+
+BABYLON.MeshBuilder.CreateLineSystem('lines', {
+    lines,
+    colors: new Array(lines.length).fill([black, black])
+}, scene);
 
 // Our built-in 'ground' shape.
 var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: cubeSize, height: cubeSize}, scene);
 
-const darkGray = new BABYLON.StandardMaterial('darkGray', scene);
+const darkGray = new BABYLON.StandardMaterial();
 darkGray.diffuseColor = new BABYLON.Color3(1,0,1);
 
 engine.runRenderLoop(function () {
