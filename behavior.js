@@ -20,6 +20,6 @@ function mapDiameter(diameter){
 function numFriends(){
     return Math.random() * 8 + 2;
 }
-function colorMap(diameter){
-    return new BABYLON.Color3(diameter * numSpheres, 1 - diameter * numSpheres, .25)
+function colorMap(diameter) {
+    return new BABYLON.Color3(1 - diameter * numSpheres / 2, diameter * numSpheres / 2, 0);
 }

@@ -60,7 +60,7 @@ for (let sphere of spheres) {
 var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: cubeSize, height: cubeSize}, scene);
 
 const darkGray = new BABYLON.StandardMaterial('darkGray', scene);
-darkGray.diffuseColor = new BABYLON.Color3(0.25, 0.25, 0.25);
+darkGray.diffuseColor = new BABYLON.Color3(1,0,1);
 
 engine.runRenderLoop(function () {
     update(spheres);
