@@ -1,5 +1,6 @@
 const maxSize = 1000;
 const numSpheres = 30;
+const numConnections = numSpheres * 3;
 function update(spheres){
     //stores previous diameter values of each sphere
     for(let sphere of spheres){
