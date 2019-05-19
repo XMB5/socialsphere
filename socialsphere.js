@@ -34,12 +34,12 @@ for (let i = 0; i < 30; i++) {
         mesh.position.z = Math.random() * cubeSize - cubeSize / 2;
 
         let tooClose = false;
-        for (let otherSphere of spheres) {
+        /*for (let otherSphere of spheres) {
             if (BABYLON.Vector3.Distance(otherSphere.mesh.position, mesh.position) < maxSize * 2.5) {
                 tooClose = true;
                 break;
             }
-        }
+        }*/
         if (!tooClose) break;
     }
     spheres.push({mesh, diameter});
