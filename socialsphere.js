@@ -1,5 +1,7 @@
 const sphereStartingDiameter = 1;
 const cubeSize = 1000;
+let run = false;
+Swal.fire(`This is Ben's aweesome 21st project`).then(() => run = true);
 
 var canvas = document.getElementById("renderCanvas");
 
@@ -74,20 +76,22 @@ const purple = new BABYLON.StandardMaterial();
 purple.diffuseColor = new BABYLON.Color3(1,0,1);
 
 engine.runRenderLoop(function () {
-    update(spheres);
-    for (let i = 0; i < spheres.length; i++) {
-        let sphere = spheres[i];
-        let pos = sphere.mesh.position;
-        sphere.mesh.dispose();
-        sphere.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(sphere.diameter)}, scene);
-        if (i === 0 || sphere.diameter === 1) {
-            sphere.mesh.material = purple;
-        } else {
-            let material = new BABYLON.StandardMaterial();
-            material.diffuseColor = colorMap(sphere.diameter);
-            sphere.mesh.material = material;
+    if(run) {
+        update(spheres);
+        for (let i = 0; i < spheres.length; i++) {
+            let sphere = spheres[i];
+            let pos = sphere.mesh.position;
+            sphere.mesh.dispose();
+            sphere.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(sphere.diameter)}, scene);
+            if (i === 0 || sphere.diameter === 1) {
+                sphere.mesh.material = purple;
+            } else {
+                let material = new BABYLON.StandardMaterial();
+                material.diffuseColor = colorMap(sphere.diameter);
+                sphere.mesh.material = material;
+            }
+            sphere.mesh.position = pos;
         }
-        sphere.mesh.position = pos;
     }
     if (scene) {
         scene.render();
