@@ -8,6 +8,14 @@ gui.add(options, 'numUsers', 2, 25).name('Number of Users');
 gui.add(options, 'friendsPerUser', 2, 8).name('Friends per User');
 gui.add({restart}, 'restart').name('Restart');
 gui.add({help}, 'help').name('Help');
-
+let endingButton;
+function addEndingButton(){
+    endingButton = gui.add({endingButtonPressed}, 'endingButtonPressed').name('Show Propagation Summary')
+}
+function removeEndingButton(){
+    if(endingButton){
+        endingButton.remove();
+    }
+}
 restart();
 help();

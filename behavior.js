@@ -2,7 +2,8 @@ function update(spheres){
     //stores previous diameter values of each sphere
     for(let sphere of spheres){
         sphere.prevDiameter = sphere.diameter;
-        sphere.lifespan += 1
+        if(sphere.diameter !== 1)
+            sphere.lifespan += 1
     }
     for(let sphere of spheres){
         let percent = (sphere.prevDiameter * .007) / sphere.friends.length;
@@ -24,6 +25,6 @@ function numFriends(){
 function colorMap(diameter) {
     return new BABYLON.Color3(1 - diameter * options.numUsers / 2, diameter * options.numUsers / 2, 0);
 }
-function endColors(){
-
+function endingButtonPressed(){
+    colorMode ^= 1
 }

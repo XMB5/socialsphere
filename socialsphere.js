@@ -1,10 +1,11 @@
 const sphereStartingDiameter = 1;
 const cubeSize = 1000;
 let run;
-let hasAlreadyFinished;
+let hasAlreadyAddedButton;
+let colorMode;
 function help() {
     run = false;
-    Swal.fire(`This is Ben's aweesome 21st project`).then(() => run = true);
+    Swal.fire('Explanation', 'Heres an explanation.').then(() => run = true);
 }
 
 var canvas = document.getElementById("renderCanvas");
@@ -35,7 +36,9 @@ let linesMesh;
 const black = new BABYLON.Color4(0, 0, 0, 1);
 
 function restart() {
-    hasAlreadyFinished = false;
+    colorMode = 0;
+    removeEndingButton();
+    hasAlreadyAddedButton = false;
     for (let sphere of spheres) {
         sphere.mesh.dispose();
     }
@@ -96,27 +99,43 @@ engine.runRenderLoop(function () {
         update(spheres);
         let counter = 0;
         for (let i = 0; i < spheres.length; i++) {
+            let sphere = spheres[i];
             if(sphere.diameter === 1){
                 counter++
             }
-            let sphere = spheres[i];
             let pos = sphere.mesh.position;
             sphere.mesh.dispose();
             sphere.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(sphere.diameter)}, scene);
-            if (i === 0 || sphere.diameter === 1) {
-                sphere.mesh.material = purple;
-            } else {
-                let material = new BABYLON.StandardMaterial();
-                material.diffuseColor = colorMap(sphere.diameter);
-                sphere.mesh.material = material;
+            if(colorMode === 0) {
+                if (i === 0 || sphere.diameter === 1) {
+                    sphere.mesh.material = purple;
+                } else {
+                    let material = new BABYLON.StandardMaterial();
+                    material.diffuseColor = colorMap(sphere.diameter);
+                    sphere.mesh.material = material;
+                }
+            }
+            else{
+                if(i === 0){
+                    sphere.mesh.material = purple;
+                }
+                else {
+                    let max = 0;
+                    for (let sphere of spheres) {
+                        if (sphere.lifespan > max) {
+                            max = sphere.lifespan
+                        }
+                    }
+                    let material = new BABYLON.StandardMaterial();
+                    material.diffuseColor = colorMap(1 - sphere.lifespan / max);
+                    sphere.mesh.material = material;
+                }
             }
             sphere.mesh.position = pos;
         }
-        if(counter === spheres.length){
-            hasAlreadyFinished = true
-        }
-        if(hasAlreadyFinished){
-            endColors()
+        if(counter === spheres.length && !hasAlreadyAddedButton){
+            hasAlreadyAddedButton = true;
+            addEndingButton()
         }
     }
     if (scene) {
