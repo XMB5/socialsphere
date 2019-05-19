@@ -1,7 +1,7 @@
 const sphereStartingDiameter = 1;
 const cubeSize = 1000;
 let run;
-
+let hasAlreadyFinished;
 function help() {
     run = false;
     Swal.fire(`This is Ben's aweesome 21st project`).then(() => run = true);
@@ -35,6 +35,7 @@ let linesMesh;
 const black = new BABYLON.Color4(0, 0, 0, 1);
 
 function restart() {
+    hasAlreadyFinished = false;
     for (let sphere of spheres) {
         sphere.mesh.dispose();
     }
@@ -56,7 +57,7 @@ function restart() {
             }*/
             if (!tooClose) break;
         }
-        spheres.push({mesh, diameter, friends: []});
+        spheres.push({mesh, diameter, lifespan: 0, friends: []});
     }
 
     const lines = [];
@@ -93,7 +94,11 @@ purple.diffuseColor = new BABYLON.Color3(1,0,1);
 engine.runRenderLoop(function () {
     if(run) {
         update(spheres);
+        let counter = 0;
         for (let i = 0; i < spheres.length; i++) {
+            if(sphere.diameter === 1){
+                counter++
+            }
             let sphere = spheres[i];
             let pos = sphere.mesh.position;
             sphere.mesh.dispose();
@@ -106,6 +111,12 @@ engine.runRenderLoop(function () {
                 sphere.mesh.material = material;
             }
             sphere.mesh.position = pos;
+        }
+        if(counter === spheres.length){
+            hasAlreadyFinished = true
+        }
+        if(hasAlreadyFinished){
+            endColors()
         }
     }
     if (scene) {
