@@ -42,17 +42,15 @@ for (let i = 0; i < numSpheres; i++) {
         }*/
         if (!tooClose) break;
     }
-    spheres.push({mesh, diameter});
+    spheres.push({mesh, diameter, friends: []});
 }
 
-for (let sphere of spheres) {
-    sphere.friends = [];
-    let friendCount = numFriends();
-    while (sphere.friends.length < friendCount) {
-        let random = spheres[Math.floor(Math.random() * spheres.length)];
-        if (!sphere.friends.includes(random)) {
-            sphere.friends.push(random);
-        }
+for (let i = 0; i < numConnections; i++) {
+    let sphere1 = spheres[Math.floor(Math.random() * spheres.length)];
+    let sphere2 = spheres[Math.floor(Math.random() * spheres.length)];
+    if (sphere1 !== sphere2 && !sphere1.friends.includes(sphere2)) {
+        sphere1.friends.push(sphere2);
+        sphere2.friends.push(sphere1);
     }
 }
 
