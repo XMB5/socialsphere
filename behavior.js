@@ -1,4 +1,4 @@
-const maxSize = 50;
+const maxSize = 1000;
 
 function update(spheres){
     //stores previous diameter values of each sphere
@@ -6,7 +6,7 @@ function update(spheres){
         sphere.prevDiameter = sphere.diameter
     }
     for(let sphere of spheres){
-        let percent = (sphere.prevDiameter * .2) / sphere.friends.length;
+        let percent = (sphere.prevDiameter * .007) / sphere.friends.length;
         //add a portion of the sphere's diameter to each of its friends
         for(let friend of sphere.friends){
             friend.diameter += percent;
@@ -15,8 +15,11 @@ function update(spheres){
     }
 }
 function mapDiameter(diameter){
-    return diameter * 40 + 10;
+    return diameter * 990 + 10;
 }
 function numFriends(){
     return Math.random() * 8 + 2;
+}
+function colorMap(diameter){
+    return new Babylon.Color3(diameter, 1 - diameter, .25)
 }
