@@ -25,7 +25,7 @@ light.intensity = 0.7;
 
 let spheres = [];
 
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < numSpheres; i++) {
     let diameter = i === 0 ? sphereStartingDiameter : 0;
     let mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(diameter)}, scene);
     while(true) {
@@ -59,12 +59,23 @@ for (let sphere of spheres) {
 // Our built-in 'ground' shape.
 var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: cubeSize, height: cubeSize}, scene);
 
+const darkGray = new BABYLON.StandardMaterial('darkGray', scene);
+darkGray.diffuseColor = new BABYLON.Color3(0.25, 0.25, 0.25);
+
 engine.runRenderLoop(function () {
     update(spheres);
-    for (let sphere of spheres) {
+    for (let i = 0; i < spheres.length; i++) {
+        let sphere = spheres[i];
         let pos = sphere.mesh.position;
         sphere.mesh.dispose();
         sphere.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(sphere.diameter)}, scene);
+        if (i === 0) {
+            sphere.mesh.material = darkGray;
+        } else {
+            let material = new BABYLON.StandardMaterial();
+            material.diffuseColor = colorMap(sphere.diameter);
+            sphere.mesh.material = material;
+        }
         sphere.mesh.position = pos;
     }
     if (scene) {
