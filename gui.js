@@ -15,6 +15,7 @@ function addEndingButton(){
 function removeEndingButton(){
     if(endingButton){
         endingButton.remove();
+        endingButton = null;
     }
 }
 restart();
