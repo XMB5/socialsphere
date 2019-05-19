@@ -1,5 +1,3 @@
-const numSpheres = 10;
-const numConnections = numSpheres * 3;
 function update(spheres){
     //stores previous diameter values of each sphere
     for(let sphere of spheres){
@@ -23,5 +21,5 @@ function numFriends(){
     return Math.random() * 8 + 2;
 }
 function colorMap(diameter) {
-    return new BABYLON.Color3(1 - diameter * numSpheres / 2, diameter * numSpheres / 2, 0);
+    return new BABYLON.Color3(1 - diameter * options.numUsers / 2, diameter * options.numUsers / 2, 0);
 }

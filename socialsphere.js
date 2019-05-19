@@ -1,7 +1,11 @@
 const sphereStartingDiameter = 1;
 const cubeSize = 1000;
-let run = false;
-Swal.fire(`This is Ben's aweesome 21st project`).then(() => run = true);
+let run;
+
+function help() {
+    run = false;
+    Swal.fire(`This is Ben's aweesome 21st project`).then(() => run = true);
+}
 
 var canvas = document.getElementById("renderCanvas");
 
@@ -26,48 +30,59 @@ var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), 
 light.intensity = 0.7;
 
 let spheres = [];
-
-for (let i = 0; i < numSpheres; i++) {
-    let diameter = i === 0 ? sphereStartingDiameter : 0;
-    let mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(diameter)}, scene);
-    while(true) {
-        mesh.position.x = Math.random() * cubeSize - cubeSize / 2;
-        mesh.position.y = Math.random() * cubeSize;
-        mesh.position.z = Math.random() * cubeSize - cubeSize / 2;
-
-        let tooClose = false;
-        /*for (let otherSphere of spheres) {
-            if (BABYLON.Vector3.Distance(otherSphere.mesh.position, mesh.position) < maxSize * 2.5) {
-                tooClose = true;
-                break;
-            }
-        }*/
-        if (!tooClose) break;
-    }
-    spheres.push({mesh, diameter, friends: []});
-}
+let linesMesh;
 
 const black = new BABYLON.Color4(0, 0, 0, 1);
 
-const lines = [];
+function restart() {
+    for (let sphere of spheres) {
+        sphere.mesh.dispose();
+    }
+    spheres.length = 0;
+    for (let i = 0; i < options.numUsers; i++) {
+        let diameter = i === 0 ? sphereStartingDiameter : 0;
+        let mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(diameter)}, scene);
+        while(true) {
+            mesh.position.x = Math.random() * cubeSize - cubeSize / 2;
+            mesh.position.y = Math.random() * cubeSize;
+            mesh.position.z = Math.random() * cubeSize - cubeSize / 2;
 
-for (let i = 0; i < numConnections; i++) {
-    let sphere1 = spheres[Math.floor(Math.random() * spheres.length)];
-    let sphere2 = spheres[Math.floor(Math.random() * spheres.length)];
-    if (sphere1 !== sphere2 && !sphere1.friends.includes(sphere2)) {
-        sphere1.friends.push(sphere2);
-        sphere2.friends.push(sphere1);
-        lines.push([
+            let tooClose = false;
+            /*for (let otherSphere of spheres) {
+                if (BABYLON.Vector3.Distance(otherSphere.mesh.position, mesh.position) < maxSize * 2.5) {
+                    tooClose = true;
+                    break;
+                }
+            }*/
+            if (!tooClose) break;
+        }
+        spheres.push({mesh, diameter, friends: []});
+    }
+
+    const lines = [];
+
+    for (let i = 0; i < options.numUsers * options.friendsPerUser; i++) {
+        let sphere1 = spheres[Math.floor(Math.random() * spheres.length)];
+        let sphere2 = spheres[Math.floor(Math.random() * spheres.length)];
+        if (sphere1 !== sphere2 && !sphere1.friends.includes(sphere2)) {
+            sphere1.friends.push(sphere2);
+            sphere2.friends.push(sphere1);
+            lines.push([
                 sphere1.mesh.position,
                 sphere2.mesh.position
-        ]);
+            ]);
+        }
     }
-}
 
-BABYLON.MeshBuilder.CreateLineSystem('lines', {
-    lines,
-    colors: new Array(lines.length).fill([black, black])
-}, scene);
+    if (linesMesh) {
+        linesMesh.dispose();
+    }
+
+    linesMesh = BABYLON.MeshBuilder.CreateLineSystem('lines', {
+        lines,
+        colors: new Array(lines.length).fill([black, black])
+    }, scene);
+}
 
 // Our built-in 'ground' shape.
 var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: cubeSize, height: cubeSize}, scene);
