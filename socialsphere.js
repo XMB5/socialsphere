@@ -70,8 +70,8 @@ BABYLON.MeshBuilder.CreateLineSystem('lines', {
 // Our built-in 'ground' shape.
 var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: cubeSize, height: cubeSize}, scene);
 
-const darkGray = new BABYLON.StandardMaterial();
-darkGray.diffuseColor = new BABYLON.Color3(1,0,1);
+const purple = new BABYLON.StandardMaterial();
+purple.diffuseColor = new BABYLON.Color3(1,0,1);
 
 engine.runRenderLoop(function () {
     update(spheres);
@@ -80,8 +80,8 @@ engine.runRenderLoop(function () {
         let pos = sphere.mesh.position;
         sphere.mesh.dispose();
         sphere.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: mapDiameter(sphere.diameter)}, scene);
-        if (i === 0) {
-            sphere.mesh.material = darkGray;
+        if (i === 0 || sphere.diameter === 1) {
+            sphere.mesh.material = purple;
         } else {
             let material = new BABYLON.StandardMaterial();
             material.diffuseColor = colorMap(sphere.diameter);

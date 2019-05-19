@@ -1,5 +1,4 @@
-const maxSize = 1000;
-const numSpheres = 30;
+const numSpheres = 10;
 const numConnections = numSpheres * 3;
 function update(spheres){
     //stores previous diameter values of each sphere
@@ -11,12 +10,14 @@ function update(spheres){
         //add a portion of the sphere's diameter to each of its friends
         for(let friend of sphere.friends){
             friend.diameter += percent;
-            sphere.diameter -= percent;
+            if(friend.diameter > 1){
+                friend.diameter = 1;
+            }
         }
     }
 }
 function mapDiameter(diameter){
-    return diameter * 990 + 10;
+    return diameter * 90 + 10;
 }
 function numFriends(){
     return Math.random() * 8 + 2;
