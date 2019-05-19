@@ -21,5 +21,5 @@ function numFriends(){
     return Math.random() * 8 + 2;
 }
 function colorMap(diameter){
-    return new Babylon.Color3(diameter, 1 - diameter, .25)
+    return new BABYLON.Color3(diameter, 1 - diameter, .25)
 }
