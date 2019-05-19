@@ -1,5 +1,5 @@
 const maxSize = 1000;
-
+const numSpheres = 30;
 function update(spheres){
     //stores previous diameter values of each sphere
     for(let sphere of spheres){
@@ -21,5 +21,5 @@ function numFriends(){
     return Math.random() * 8 + 2;
 }
 function colorMap(diameter){
-    return new BABYLON.Color3(diameter, 1 - diameter, .25)
+    return new BABYLON.Color3(diameter * numSpheres, 1 - diameter * numSpheres, .25)
 }
