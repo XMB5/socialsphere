@@ -5,7 +5,7 @@ let hasAlreadyAddedButton;
 let colorMode;
 function help() {
     run = false;
-    Swal.fire('Explanation', 'Heres an explanation.').then(() => run = true);
+    Swal.fire('Explanation', 'You have stumbled upon my almost done 21st project. Nice Job!').then(() => run = true);
 }
 
 var canvas = document.getElementById("renderCanvas");
