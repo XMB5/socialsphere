@@ -9,7 +9,8 @@ function update(spheres){
         let percent = (sphere.prevDiameter * .2) / sphere.friends.length;
         //add a portion of the sphere's diameter to each of its friends
         for(let friend of sphere.friends){
-            friend.diameter += percent
+            friend.diameter += percent;
+            sphere.diameter -= percent;
         }
     }
 }
