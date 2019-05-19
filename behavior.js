@@ -14,8 +14,8 @@ function update(spheres){
         }
     }
 }
-function mapRadius(sphere){
-    return sphere.diameter * 8 + 2;
+function mapDiameter(diameter){
+    return diameter * 8 + 2;
 }
 function numFriends(){
     return Math.random() * 8 + 2;
