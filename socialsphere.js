@@ -19,8 +19,11 @@ function help() {
             'You can also press \'Show Related Groups of Users\' to more see distinct groups of like minded users.<br/>' +
             'Like-Minded users are groups of users who exchanged the most mass(information) throughout the duration of the simulation.' +
             '(Most useful with a higher number of users. Colors have no significance.) <br/><br/>' +
-        'Adjust parameters and restart the simulation with the buttons on the dashboard.<br/>' +
-        'Press help to display this text.<br/><br/>',
+            'This simulation demonstrates several aspects of social media which I address in other parts of my project' +
+            ', including group theory, networked group dynamics, and how information spreads. ' +
+            'It also proves the lack of anonymity, since any friends you have help contribute to your identity. <br/><br/>' +
+        'Note: Adjust parameters and restart the simulation with the buttons on the dashboard.<br/>' +
+        'Press help to display this text and pause the simulation.<br/><br/>',
         footer: 'Full Code is available at https://github.com/XMB5/socialsphere'}).then(() => run = true);
 }
 
