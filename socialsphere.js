@@ -16,7 +16,7 @@ function help() {
         'Once all the spheres(users) are purple, press \'Show Propagation Summary\'. <br/>' +
         'Users are colored based on how quickly they received the information(green = fast, red = slow). ' +
         'This shows how related the spheres(users) are to the original sphere(user).<br/><br/>' +
-            'You can also press \'Show Related Groups of Users\' to more see distinct groups of like minded users.' +
+            'You can also press \'Show Related Groups of Users\' to more see distinct groups of like minded users.<br/>' +
             'Like-Minded users are users who exchanged the most mass(information) throughout the duration of the simulation.' +
             '(Most useful with a higher number of users. Colors have no significance.) <br/><br/>' +
         'Adjust parameters and restart to simulation with the buttons on the dashboard.<br/>' +
