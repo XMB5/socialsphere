@@ -17,9 +17,9 @@ function help() {
         'Users are colored based on how quickly they received the information(green = fast, red = slow). ' +
         'This shows how related the spheres(users) are to the original sphere(user).<br/><br/>' +
             'You can also press \'Show Related Groups of Users\' to more see distinct groups of like minded users.<br/>' +
-            'Like-Minded users are users who exchanged the most mass(information) throughout the duration of the simulation.' +
+            'Like-Minded users are groups of users who exchanged the most mass(information) throughout the duration of the simulation.' +
             '(Most useful with a higher number of users. Colors have no significance.) <br/><br/>' +
-        'Adjust parameters and restart to simulation with the buttons on the dashboard.<br/>' +
+        'Adjust parameters and restart the simulation with the buttons on the dashboard.<br/>' +
         'Press help to display this text.<br/><br/>',
         footer: 'Full Code is available at https://github.com/XMB5/socialsphere'}).then(() => run = true);
 }
