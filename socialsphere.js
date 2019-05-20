@@ -2,6 +2,7 @@ const sphereStartingDiameter = 1;
 const cubeSize = 1000;
 let run;
 let hasAlreadyAddedButton;
+let hasAlreadyAddedGroup;
 let colorMode;
 function help() {
     run = false;
@@ -9,13 +10,16 @@ function help() {
         title: 'Social Network Information Visualization ',
         html: 'When you press OK, the simulation will begin. <br/>' +
         'Part 1 of the simulation:<br/>' +
-        'The purple sphere represents a user injecting some information to a network.<br/>' +
+        'The purple sphere represents a user injecting some information to a network.' +
         'Over time, this information spreads through friend connections(lines connecting spheres).<br/><br/>' +
         'Part 2 of the simulation: <br/>' +
-        'Once all the spheres are purple, press \' Show Propagation Summary \'. <br/>' +
-        'Spheres are colored based on how quickly they received the information(green = fast, red = slow). ' +
-        'This shows how related the spheres(users) are to the original sphere(user). <br/><br/>' +
-        'Adjust parameters and restart to simulation with the button on top.<br/>' +
+        'Once all the spheres(users) are purple, press \'Show Propagation Summary\'. <br/>' +
+        'Users are colored based on how quickly they received the information(green = fast, red = slow). ' +
+        'This shows how related the spheres(users) are to the original sphere(user).<br/><br/>' +
+            'You can also press \'Show Related Groups of Users\' to more see distinct groups of like minded users.' +
+            'Like-Minded users are users who exchanged the most mass(information) throughout the duration of the simulation.' +
+            '(Most useful with a higher number of users. Colors have no significance.) <br/><br/>' +
+        'Adjust parameters and restart to simulation with the buttons on the dashboard.<br/>' +
         'Press help to display this text.<br/><br/>',
         footer: 'Full Code is available at https://github.com/XMB5/socialsphere'}).then(() => run = true);
 }
@@ -50,7 +54,9 @@ const black = new BABYLON.Color4(0, 0, 0, 1);
 function restart() {
     colorMode = 0;
     removeEndingButton();
+    removeGroupButton();
     hasAlreadyAddedButton = false;
+    hasAlreadyAddedGroup = false;
     for (let sphere of spheres) {
         sphere.mesh.dispose();
     }
@@ -127,7 +133,7 @@ engine.runRenderLoop(function () {
                     sphere.mesh.material = material;
                 }
             }
-            else{
+            else if(colorMode === 1){
                 if(i === 0){
                     sphere.mesh.material = purple;
                 }
@@ -143,11 +149,59 @@ engine.runRenderLoop(function () {
                     sphere.mesh.material = material;
                 }
             }
+            //Group theory - break nodes down into groups
+            else if(colorMode === 2){
+                if(i === 0){
+                    sphere.mesh.material = purple;
+                }
+                else {
+                    let max = 0;
+                    let min = 999999;
+                    for (let sphere of spheres) {
+                        if (sphere.lifespan > max) {
+                            max = sphere.lifespan
+                        }
+                        if (sphere.lifespan < min) {
+                            min = sphere.lifespan
+                        }
+                    }
+                    max -= min;
+                    let material = new BABYLON.StandardMaterial();
+                    if (sphere.lifespan > max * .9) {
+                        material.diffuseColor = new BABYLON.Color3(0, 1, 1);
+                        sphere.mesh.material = material;
+                    }
+                    else if(sphere.lifespan > max * .8){
+                        material.diffuseColor = new BABYLON.Color3(.5 , 1, 1);
+                        sphere.mesh.material = material;
+                    }
+                    else if(sphere.lifespan > max * .7){
+                        material.diffuseColor = new BABYLON.Color3(1, 1, .5);
+                        sphere.mesh.material = material;
+                    }
+                    else if(sphere.lifespan > max * .6){
+                        material.diffuseColor = new BABYLON.Color3(0, 1, 0);
+                        sphere.mesh.material = material;
+                    }
+                    else if(sphere.lifespan > max * .5){
+                        material.diffuseColor = new BABYLON.Color3(1, 0 , 0);
+                        sphere.mesh.material = material;
+                    }
+                    else{
+                        material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+                        sphere.mesh.material = material;
+                    }
+                }
+            }
             sphere.mesh.position = pos;
         }
         if(counter === spheres.length && !hasAlreadyAddedButton){
             hasAlreadyAddedButton = true;
             addEndingButton()
+        }
+        if(counter === spheres.length && !hasAlreadyAddedGroup){
+            hasAlreadyAddedGroup = true;
+            addGroupButton()
         }
     }
     if (scene) {

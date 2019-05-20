@@ -26,5 +26,8 @@ function colorMap(diameter) {
     return new BABYLON.Color3(1 - diameter * options.numUsers / 2, diameter * options.numUsers / 2, 0);
 }
 function endingButtonPressed(){
-    colorMode ^= 1
+    colorMode = 1
+}
+function groupButtonPressed(){
+    colorMode = 2
 }
